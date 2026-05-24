@@ -1,0 +1,28 @@
+{
+  "name": "330-cine-byte-api",
+  "version": "1.0.0",
+  "description": "A RESTful API backend for Cine-Byte — a movie discovery and review platform. This serves as the backend service for the Cine-Byte application previously built in JSCRIPT 320, which currently uses Firebase as its data source. This project rebuilds that backend using Node.js, Express, and MongoDB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r @babel/register index.js",
+    "dev": "nodemon -r @babel/register index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.2",
+    "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.5",
+    "@babel/register": "^7.29.3"
+  }
+}
