@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import isAuthorized from '../middleware/isAuthorized'
-import { createUser, getUserEmail } from '../daos/userDao';
+import { createUser, getUser, updatePassword } from '../daos/userDao';
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.post('/signup', async ( req, res) => {
 
     } catch (error) {
         // checking for duplicate key error message when email is already used in db
-        if(error.name === 'MongoServerError' && error.message.includes ('E1100')) {
+        if(error.name === 'MongoServerError' && error.message.includes ('E11000')) {
             return res.sendStatus(409);
         }
         return res.status(500).send('Server error')
@@ -34,30 +34,46 @@ router.post('/login', (req, res, next) => {
         // eslint-disable-next-line no-console
     console.log(`Audit Log For Login User: ${req.body.email}`);
     next();
-}, async (req, res) => {
-    const {email, password} = req.body;
+    }, async (req, res) => {
+        const {email, password} = req.body;
+        if (!password) return res.sendStatus(400);
+
+        try {
+            //look up user by email through daos
+            const user = await getUser(email);
+            // if no user return 401 unathorized
+            if (!user) return res.sendStatus(401);
+            const hashedPassword = user.password
+            // compare provided password against the hash password
+            const isAuthenticated = await bcrypt.compare(password, hashedPassword);
+            if (isAuthenticated) {
+                const token = jwt.sign(
+                    {_id: user._id.toString(), email: user.email, roles: user.roles},
+                    JWT_SECRET,
+                    {expiresIn: '7d'},
+                );
+                return res.status(200).json({token});
+            }
+            return res.status(401).send('unathorized');
+            
+        } catch (e) {
+            return res.status(500).send('Server error'); 
+        }
+
+});
+
+// lets a logged in user change their password
+router.put('/password', isAuthorized, async (req, res) => {
+    const {password} = req.body;
     if (!password) return res.sendStatus(400);
 
-    //look up user by email through daos
-    const user = await getUserEmail(email);
-    // if no user return 401 unathorized
-    if (!user) return res.sendStatus(401);
+    try{
+        await updatePassword(req.user._id, password);
+        return res.sendStatus(200);
 
-    const hashedPassword = user.password
-    // compare provided password against the hash password
-    const isAuthenticated = await bcrypt.compare(password, hashedPassword);
-    if (isAuthenticated) {
-        const token = jwt.sign(
-            {_id: user._id.toString(), email: user.email, roles: user.roles},
-            JWT_SECRET,
-            {expiresIn: '7d'},
-        );
-        return res.status(200).json({token});
+    } catch (e) {
+        return res.status(500).send('Server error')
     }
-    return res.status(401).send('unathorized');
-
-    },
-);
-
+});
 
 export default router;

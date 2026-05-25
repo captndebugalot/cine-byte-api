@@ -9,14 +9,17 @@ export const createUser = async (userObj) => {
     return models.User.create({
         ...userObj, 
         password: hashedPassword,
-        roles: 'user'
+        roles: ['user']
     });
 };
 
-export const getUserEmail = async (email) => { 
-    try {
-        return await User.findOne({email}).lean();
-    } catch (e) {
-        return null;
-    }
+// looks up user by email
+export const getUser = async (email) => { 
+    return await models.User.findOne({email}).lean();
+};
+
+// updates users password
+export const updatePassword = async (userID, password) => { 
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    return await models.User.findByIdAndUpdate(userID, {password: hashedPassword});
 };
