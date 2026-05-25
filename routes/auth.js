@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user';
 import isAuthorized from '../middleware/isAuthorized'
-import { createUser, getUserByEmail } from '../daos/userDao';
+import { createUser, getUserEmail } from '../daos/userDao';
 
 const router = express.Router();
 

@@ -15,7 +15,7 @@ export const createUser = async (userObj) => {
 
 export const getUserEmail = async (email) => { 
     try {
-        return await User.findOne({email});
+        return await User.findOne({email}).lean();
     } catch (e) {
         return null;
     }
