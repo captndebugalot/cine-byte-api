@@ -1,3 +1,16 @@
 node_modules/
+# dotenv environment variable files
 .env
-dist/
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+.eslintcache

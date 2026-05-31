@@ -2,6 +2,7 @@ import express from 'express';
 import isAuthorized from '../middleware/isAuthorized';
 import { getAll, create, getById, updateById, deleteById } from '../daos/movieDao';
 import isAdmin from '../middleware/isAdmin';
+import { getByMovie } from '../daos/reviewDao';
 
 const router = express.Router();
 
@@ -19,12 +20,14 @@ router.get('/', async(req, res) => {
     }
 });
 
-// find movie by id
+// find movie by id and also queries its reviews
 router.get('/:id', async (req, res) => {
   try {
     const movie = await getById(req.params.id);
     if (!movie) return res.sendStatus(404);
-    return res.json(movie);
+    // retrieving movie reviews
+    const reviews = await getByMovie(req.params.id);
+    return res.json({...movie, reviews});
   } catch (e) {
     console.log(`get getById route error: ${e.message}`)
     return res.status(400).send('Server error');

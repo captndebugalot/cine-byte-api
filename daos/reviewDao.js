@@ -8,6 +8,10 @@ export const create = async (userId, reviewObj) =>
 export const getByUser = async (userId) => 
     models.Review.find({userId}).lean();
 
+// get reviews by a movie
+export const getByMovie = async (movieId) => 
+  models.Review.find({movieId}).lean();
+
 // update a review by id if it belongs to the user
 export const updateById = async (userId, id, reviewObj) =>
   models.Review.findOneAndUpdate(

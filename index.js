@@ -2,17 +2,17 @@ import 'dotenv/config';
 import mongoose from "mongoose";
 import server from './server';
 
-const port = process.env.PORT || 3000;
+const { PORT = 3000, MONGO_CONNECT_URI } = process.env;
 
 mongoose
-    .connect('mongodb://127.0.0.1/330-cine-byte-api')
+    .connect(MONGO_CONNECT_URI)
     .then(() => {
         // eslint-disable-next-line no-console
         console.log('MongoDB Connected');
 
-        server.listen(port, () => {
+        server.listen(PORT, () => {
         // eslint-disable-next-line no-console
-        console.log(`Server is listening on http://localhost:${port}`);
+        console.log(`Server is listening on http://localhost:${PORT}`);
         });
     }).catch((e) => {
         // eslint-disable-next-line no-console

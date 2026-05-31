@@ -111,7 +111,7 @@ GET    /stats/most-reviewed  most reviewed movies using aggregation pipeline
 |---|---|
 | `isAuthorized` | Verifies JWT token on all protected routes |
 | `isAdmin` | Checks admin role for restricted movie management routes |
-| `isOwner` | Ensures users can only modify their own reviews |
+
 
 ---
 
