@@ -21,11 +21,11 @@ router.post('/signup', async ( req, res) => {
         if (user) return res.sendStatus(200);
 
     } catch (error) {
-        // checking for duplicate key error message when email is already used in db
-        if(error.name === 'MongoServerError' && error.message.includes ('E11000')) {
+        console.error('Signup error:', error.name, error.message);
+        if(error.name === 'MongoServerError' && error.message.includes('E11000')) {
             return res.sendStatus(409);
         }
-        return res.status(500).send('Server error')
+        return res.status(500).send('Server error');
     }
 });
 
