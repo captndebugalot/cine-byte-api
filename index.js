@@ -12,7 +12,7 @@ mongoose
 
         server.listen(PORT, () => {
         // eslint-disable-next-line no-console
-        console.log(`Server is listening on http://localhost:${PORT}`);
+        console.log(`Server is listening on port ${PORT}`);
         });
     }).catch((e) => {
         // eslint-disable-next-line no-console
