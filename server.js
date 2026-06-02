@@ -7,8 +7,6 @@ const server = express();
 const allowedOrigins = [
     'http://localhost:5173',
     'https://movie-night-generator.web.app',
-    'https://cine-byte-api-production.up.railway.app'
-
 ];
 
 const deployedUrl = process.env.RAILWAY_PUBLIC_DOMAIN

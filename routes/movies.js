@@ -60,7 +60,7 @@ router.put('/:id', isAdmin, async (req, res) => {
 // delete a movie by id
 router.delete('/:id', isAdmin, async (req, res) =>{
     try{
-        const movie = await deleteById(req.params.id, req.body);
+        const movie = await deleteById(req.params.id);
         if(!movie) return res.sendStatus(404);
         return res.sendStatus(200);
     } catch (e) {

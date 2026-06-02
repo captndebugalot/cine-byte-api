@@ -24,6 +24,18 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.5",
     "@babel/register": "^7.29.3",
-    "nodemon": "^3.1.14"
+    "@shelf/jest-mongodb": "^6.0.2",
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
+  },
+  "scripts": {
+    "test": "jest --runInBand",
+    "start": "node -r @babel/register index.js",
+    "dev": "nodemon -r @babel/register index.js"
+  },
+  "jest": {
+    "preset": "@shelf/jest-mongodb",
+    "watchPathIgnorePatterns": ["globalConfig"]
   }
 }

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import models from '../models'
 
 const SALT_ROUNDS = 10;
-
+// Admin user is created manually in database
 // Creates a new user in the database
 export const createUser = async (userObj) => {
     const hashedPassword = await bcrypt.hash(userObj.password, SALT_ROUNDS);

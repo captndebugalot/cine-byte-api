@@ -19,5 +19,5 @@ export const updateById = async (id, movieObj) => {
 };
 
 export const deleteById = async(id) => {
-    return await models.Movie.findOneAndDelete(id).lean();
+    return await models.Movie.findByIdAndDelete(id).lean();
 };
