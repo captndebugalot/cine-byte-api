@@ -29,7 +29,7 @@
     "nodemon": "^3.1.14",
     "supertest": "^7.2.2"
   },
-  "scripts": {
+    "scripts": {
     "test": "jest --runInBand",
     "start": "node -r @babel/register index.js",
     "dev": "nodemon -r @babel/register index.js"
