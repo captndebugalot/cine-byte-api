@@ -1,50 +1,5 @@
 # Cine-Byte API
 
-## Project Update
-### Completed
-```
-Auth:
-  POST /auth/signup         - create user with hashed password and default user role
-  POST /auth/login          - authenticate and return JWT token
-  PUT  /auth/password       - change password (authenticated)
-
-Movies:
-  GET    /movies            - get all movies (authenticated)
-  GET    /movies/:id        - get one movie by id (authenticated)
-  POST   /movies            - create a movie (admin only)
-  PUT    /movies/:id        - update a movie (admin only)
-  DELETE /movies/:id        - delete a movie (admin only)
-
-Reviews:
-  GET    /reviews           - get all reviews for logged in user
-  POST   /reviews           - create a review (authenticated)
-  PUT    /reviews/:id       - update own review (authenticated)
-  DELETE /reviews/:id       - delete own review (authenticated)
-
-Middleware:
-  isAuthorized              - verifies JWT token on protected routes
-  isAdmin                   - checks admin role for restricted routes
-
-DAOs:
-  userDao                   - createUser, getUser, updatePassword
-  movieDao                  - getAll, getById, create, updateById, deleteById
-  reviewDao                 - getByUser, create, updateById, deleteById
-```
-
-### Still To Do
-```
-Stats Routes:
-  GET /stats/top-rated      - top rated movies using aggregation pipeline
-  GET /stats/by-genre       - average rating per genre using aggregation pipeline
-  GET /stats/most-reviewed  - most reviewed movies using aggregation pipeline
-
-Final Steps:
-  Testing
-  Code cleanup
-  Postman collection
-  mongosh demo queries
-  Presentation preparation
-```
 
 ## 1. Project Context
 
