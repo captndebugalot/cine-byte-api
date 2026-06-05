@@ -4,9 +4,13 @@
   "description": "A RESTful API backend for Cine-Byte...",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "NODE_ENV=test jest --runInBand",
     "start": "node -r @babel/register index.js",
-    "dev": "nodemon -r @babel/register index.js"
+    "dev": "nodemon -r @babel/register index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --check . --write"
   },
   "keywords": [],
   "author": "",
@@ -25,12 +29,11 @@
     "@babel/preset-env": "^7.29.5",
     "@babel/register": "^7.29.3",
     "@shelf/jest-mongodb": "^6.0.2",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
     "jest": "^30.4.2",
     "nodemon": "^3.1.14",
+    "prettier": "^3.8.3",
     "supertest": "^7.2.2"
-  },
-  "jest": {
-    "preset": "@shelf/jest-mongodb",
-    "watchPathIgnorePatterns": ["globalConfig"]
   }
 }

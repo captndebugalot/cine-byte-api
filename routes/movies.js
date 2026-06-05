@@ -1,6 +1,12 @@
 import express from 'express';
 import isAuthorized from '../middleware/isAuthorized';
-import { getAll, create, getById, updateById, deleteById } from '../daos/movieDao';
+import {
+  getAll,
+  create,
+  getById,
+  updateById,
+  deleteById,
+} from '../daos/movieDao';
 import isAdmin from '../middleware/isAdmin';
 import { getByMovie } from '../daos/reviewDao';
 
@@ -10,14 +16,14 @@ const router = express.Router();
 router.use(isAuthorized);
 
 // get all movies in db
-router.get('/', async(req, res) => {
-    try {
-        const movies = await getAll();
+router.get('/', async (req, res) => {
+  try {
+    const movies = await getAll();
 
-        return res.json(movies);
-    } catch (e) {
-        return res.status(500).send('Server error');
-    }
+    return res.json(movies);
+  } catch (e) {
+    return res.status(500).send('Server error');
+  }
 });
 
 // find movie by id and also queries its reviews
@@ -27,48 +33,46 @@ router.get('/:id', async (req, res) => {
     if (!movie) return res.sendStatus(404);
     // retrieving movie reviews
     const reviews = await getByMovie(req.params.id);
-    return res.json({...movie, reviews});
+    return res.json({ ...movie, reviews });
   } catch (e) {
-    console.log(`get getById route error: ${e.message}`)
+    console.log(`get getById route error: ${e.message}`);
     return res.status(400).send('Server error');
   }
 });
 
 // create a movie and return it
 router.post('/', isAdmin, async (req, res) => {
-    try{
-        const movie = await create(req.body);
-        return res.json(movie);
-    } catch (e) {
-        console.log(`create route error: ${e.message}`)
-        return res.status(500).send('Server error');
-    }
+  try {
+    const movie = await create(req.body);
+    return res.json(movie);
+  } catch (e) {
+    console.log(`create route error: ${e.message}`);
+    return res.status(500).send('Server error');
+  }
 });
 
- // update existing movie by id and returns updated movie
+// update existing movie by id and returns updated movie
 router.put('/:id', isAdmin, async (req, res) => {
-    try{
-        const movie = await updateById(req.params.id, req.body);
-        if (!movie) return res.sendStatus(404);
-        return res.json(movie);
-    } catch (e) {
-        console.log(`updateById route error: ${e.message}`)
-        return res.status(500).send('Server error');
-    }
+  try {
+    const movie = await updateById(req.params.id, req.body);
+    if (!movie) return res.sendStatus(404);
+    return res.json(movie);
+  } catch (e) {
+    console.log(`updateById route error: ${e.message}`);
+    return res.status(500).send('Server error');
+  }
 });
 
 // delete a movie by id
-router.delete('/:id', isAdmin, async (req, res) =>{
-    try{
-        const movie = await deleteById(req.params.id);
-        if(!movie) return res.sendStatus(404);
-        return res.sendStatus(200);
-    } catch (e) {
-        console.log(`delete route error: ${e.message}`)
-        return res.status(400).send('Server error');
-    }
-
-})
-
+router.delete('/:id', isAdmin, async (req, res) => {
+  try {
+    const movie = await deleteById(req.params.id);
+    if (!movie) return res.sendStatus(404);
+    return res.sendStatus(200);
+  } catch (e) {
+    console.log(`delete route error: ${e.message}`);
+    return res.status(400).send('Server error');
+  }
+});
 
 export default router;
