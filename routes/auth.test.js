@@ -17,10 +17,6 @@ describe('/auth', () => {
     password: '123password',
   };
 
-  const user1 = {
-    email: 'user1@mail.com',
-    password: '456password',
-  };
 
   describe('POST /auth/signup', () => {
     it('should return 400 without a password', async () => {

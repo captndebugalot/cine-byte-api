@@ -12,7 +12,8 @@ router.get('/', async (req, res) => {
   try {
     const reviews = await getByUser(req.user._id);
     return res.json(reviews);
-  } catch (e) {
+  } catch (_e) {
+    console.log(`gat all reviews error: ${_e.message}`);
     return res.status(500).send('Server error');
   }
 });
@@ -22,8 +23,8 @@ router.post('/', async (req, res) => {
   try {
     const review = await create(req.user._id, req.body);
     return res.json(review);
-  } catch (e) {
-    console.log(`create review error: ${e.message}`);
+  } catch (_e) {
+    console.log(`create review error: ${_e.message}`);
     return res.status(500).send(`Server error`);
   }
 });
@@ -34,8 +35,8 @@ router.put('/:id', async (req, res) => {
     const review = await updateById(req.user._id, req.params.id, req.body);
     if (!review) return res.sendStatus(404);
     return res.json(review);
-  } catch (e) {
-    console.log(`update review error: ${e.message}`);
+  } catch (_e) {
+    console.log(`update review error: ${_e.message}`);
     return res.status(400).send('Server error');
   }
 });
@@ -46,8 +47,8 @@ router.delete('/:id', async (req, res) => {
     const review = await deleteById(req.user._id, req.params.id);
     if (!review) return res.sendStatus(404);
     return res.sendStatus(200);
-  } catch (e) {
-    console.log(`delete review error: ${e.message}`);
+  } catch (_e) {
+    console.log(`delete review error: ${_e.message}`);
     return res.status(400).send('Server error');
   }
 });

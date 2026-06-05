@@ -1,7 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
 import isAuthorized from '../middleware/isAuthorized';
 import { createUser, getUser, updatePassword } from '../daos/userDao';
 
@@ -32,7 +31,6 @@ router.post('/signup', async (req, res) => {
 router.post(
   '/login',
   (req, res, next) => {
-    // eslint-disable-next-line no-console
     console.log(`Audit Log For Login User: ${req.body.email}`);
     next();
   },
@@ -57,7 +55,8 @@ router.post(
         return res.status(200).json({ token });
       }
       return res.status(401).send('unathorized');
-    } catch (e) {
+    } catch (_e) {
+      console.log(`log in route error: ${_e.message}`);
       return res.status(500).send('Server error');
     }
   },
@@ -71,7 +70,8 @@ router.put('/password', isAuthorized, async (req, res) => {
   try {
     await updatePassword(req.user._id, password);
     return res.sendStatus(200);
-  } catch (e) {
+  } catch (_e) {
+    console.log(`change password route error: ${_e.message}`);
     return res.status(500).send('Server error');
   }
 });

@@ -21,7 +21,8 @@ router.get('/', async (req, res) => {
     const movies = await getAll();
 
     return res.json(movies);
-  } catch (e) {
+  } catch (_e) {
+    console.log(`get all movies route error: ${_e.message}`);
     return res.status(500).send('Server error');
   }
 });
@@ -34,8 +35,8 @@ router.get('/:id', async (req, res) => {
     // retrieving movie reviews
     const reviews = await getByMovie(req.params.id);
     return res.json({ ...movie, reviews });
-  } catch (e) {
-    console.log(`get getById route error: ${e.message}`);
+  } catch (_e) {
+    console.log(`get getById route error: ${_e.message}`);
     return res.status(400).send('Server error');
   }
 });
@@ -45,8 +46,8 @@ router.post('/', isAdmin, async (req, res) => {
   try {
     const movie = await create(req.body);
     return res.json(movie);
-  } catch (e) {
-    console.log(`create route error: ${e.message}`);
+  } catch (_e) {
+    console.log(`create route error: ${_e.message}`);
     return res.status(500).send('Server error');
   }
 });
@@ -57,8 +58,8 @@ router.put('/:id', isAdmin, async (req, res) => {
     const movie = await updateById(req.params.id, req.body);
     if (!movie) return res.sendStatus(404);
     return res.json(movie);
-  } catch (e) {
-    console.log(`updateById route error: ${e.message}`);
+  } catch (_e) {
+    console.log(`updateById route error: ${_e.message}`);
     return res.status(500).send('Server error');
   }
 });
@@ -69,8 +70,8 @@ router.delete('/:id', isAdmin, async (req, res) => {
     const movie = await deleteById(req.params.id);
     if (!movie) return res.sendStatus(404);
     return res.sendStatus(200);
-  } catch (e) {
-    console.log(`delete route error: ${e.message}`);
+  } catch (_e) {
+    console.log(`delete route error: ${_e.message}`);
     return res.status(400).send('Server error');
   }
 });
